@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup - MLM Company</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #003d99 0%, #0052cc 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            animation: slideUp 0.5s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-header {
+            background: linear-gradient(135deg, #003d99 0%, #0052cc 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .auth-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-header p {
+            font-size: 14px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            margin: 20px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 5px;
+            gap: 5px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .toggle-btn.active {
+            background: white;
+            color: #003d99;
+            box-shadow: 0 2px 8px rgba(0, 61, 153, 0.2);
+        }
+
+        .auth-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #999;
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #003d99;
+            z-index: 5;
+            background: none;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #003d99 0%, #0052cc 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 61, 153, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .form-text {
+            font-size: 12px;
+            color: #999;
+            margin-top: 6px;
+        }
+
+        .auth-footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #f0f0f0;
+            background: #fafafa;
+        }
+
+        .auth-footer p {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+
+        .auth-footer a {
+            color: #003d99;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auth-footer a:hover {
+            color: #0052cc;
+            text-decoration: underline;
+        }
+
+        .social-divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #ccc;
+        }
+
+        .social-divider::before,
+        .social-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .social-divider span {
+            padding: 0 15px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .social-btn:hover {
+            border-color: #003d99;
+            color: #003d99;
+            background: #f0f7ff;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .form-check-input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #667eea;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            margin-right: 8px;
+        }
+
+        .form-check-input:checked {
+            background-color: #003d99;
+            border-color: #003d99;
+        }
+
+        .form-check label {
+            margin-bottom: 0;
+            font-size: 13px;
+            color: #666;
+            cursor: pointer;
+            text-transform: none;
+            font-weight: 500;
+            letter-spacing: normal;
+        }
+
+        .hidden-form {
+            display: none;
+        }
+
+        .sponsor-info {
+            background: #f0f7ff;
+            border-left: 4px solid #003d99;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #0052cc;
+            margin-bottom: 15px;
+        }
+
+        .eye-icon {
+            font-size: 16px;
+        }
+
+        .alert-message {
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+        }
+
+        .alert-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .page-title {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .page-title h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin: 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-title p {
+            font-size: 16px;
+            opacity: 0.95;
+            margin-top: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-card {
+                border-radius: 10px;
+            }
+
+            .auth-header {
+                padding: 30px 15px;
+            }
+
+            .auth-header h1 {
+                font-size: 26px;
+            }
+
+            .auth-body {
+                padding: 20px;
+            }
+
+            .toggle-buttons {
+                margin: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Page Title -->
+        <div class="page-title">
+            <h1>MLM COMPANY</h1>
+            <p>Secure Login & Registration</p>
+        </div>
+
+        <div class="auth-card">
+            <!-- Toggle Buttons -->
+            <div class="toggle-buttons">
+                <button class="toggle-btn active" id="loginToggle" onclick="showLoginForm()">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <button class="toggle-btn" id="signupToggle" onclick="showSignupForm()">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="auth-body">
+                <!-- Messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'success' %}
+                            <div class="alert-message alert-success">
+                                <i class="fas fa-check-circle alert-icon"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                        {% elif message.tags == 'error' %}
+                            <div class="alert-message alert-error">
+                                <i class="fas fa-exclamation-circle alert-icon"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                        {% else %}
+                            <div class="alert-message alert-warning">
+                                <i class="fas fa-info-circle alert-icon"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="loginEmail"><i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" class="form-control" id="loginEmail" name="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="loginPassword"><i class="fas fa-key"></i> Password</label>
+                        <div class="password-toggle">
+                            <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">
+                                <i class="fas fa-eye eye-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me & Forgot Password -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe" name="remember">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" style="font-size: 13px; color: #667eea; text-decoration: none;">Forgot password?</a>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                </form>
+
+                <!-- Footer -->
+                <div class="auth-footer">
+                    <p>Don't have an account? <a onclick="showSignupForm()">Sign Up Now</a></p>
+                </div>
+            </div>
+
+            <!-- Signup Form -->
+            <div id="signupForm" class="auth-body hidden-form">
+                <!-- Messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'success' %}
+                            <div class="alert-message alert-success">
+                                <i class="fas fa-check-circle alert-icon"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                        {% elif message.tags == 'error' %}
+                            <div class="alert-message alert-error">
+                                <i class="fas fa-exclamation-circle alert-icon"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                        {% else %}
+                            <div class="alert-message alert-warning">
+                                <i class="fas fa-info-circle alert-icon"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST" action="{% url 'join' %}">
+                    {% csrf_token %}
+
+                    <!-- Sponsor Info -->
+                    <div class="sponsor-info">
+                        <i class="fas fa-info-circle"></i> Enter your sponsor details below
+                    </div>
+
+                    <!-- Sponsor ID -->
+                    <div class="form-group">
+                        <label for="sponsorId"><i class="fas fa-id-card"></i> Sponsor ID</label>
+                        <input type="text" class="form-control" id="sponsorId" name="sponsor_id" placeholder="Enter sponsor ID" required>
+                    </div>
+
+                    <!-- Sponsor Name -->
+                    <div class="form-group">
+                        <label for="sponsorName"><i class="fas fa-user-tie"></i> Sponsor Name</label>
+                        <input type="text" class="form-control" id="sponsorName" name="sponsor_name" placeholder="Sponsor's full name" required>
+                    </div>
+
+                    <!-- Full Name -->
+                    <div class="form-group">
+                        <label for="fullName"><i class="fas fa-user"></i> Full Name</label>
+                        <input type="text" class="form-control" id="fullName" name="full_name" placeholder="Enter your full name" required>
+                    </div>
+
+                    <!-- Mobile Number -->
+                    <div class="form-group">
+                        <label for="mobile"><i class="fas fa-phone"></i> Mobile Number</label>
+                        <input type="tel" class="form-control" id="mobile" name="mobile" placeholder="Enter your mobile number" pattern="[0-9]{10}" required>
+                        <small class="form-text">10 digit mobile number</small>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="signupEmail"><i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" class="form-control" id="signupEmail" name="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="signupPassword"><i class="fas fa-key"></i> Password</label>
+                        <div class="password-toggle">
+                            <input type="password" class="form-control" id="signupPassword" name="password" placeholder="Create a strong password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('signupPassword')">
+                                <i class="fas fa-eye eye-icon"></i>
+                            </button>
+                        </div>
+                        <small class="form-text">Minimum 8 characters with uppercase, lowercase & numbers</small>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="form-group">
+                        <label for="confirmPassword"><i class="fas fa-key"></i> Confirm Password</label>
+                        <div class="password-toggle">
+                            <input type="password" class="form-control" id="confirmPassword" name="confirm_password" placeholder="Confirm your password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword')">
+                                <i class="fas fa-eye eye-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Terms & Conditions -->
+                    <div class="form-check" style="margin-bottom: 20px;">
+                        <input type="checkbox" class="form-check-input" id="agreeTerms" name="agree_terms" required>
+                        <label class="form-check-label" for="agreeTerms">
+                            I agree to the <a href="#" style="color: #667eea; text-decoration: none;">Terms & Conditions</a> and <a href="#" style="color: #667eea; text-decoration: none;">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-user-check"></i> Create Account
+                    </button>
+                </form>
+
+                <!-- Footer -->
+                <div class="auth-footer">
+                    <p>Already have an account? <a onclick="showLoginForm()">Sign In Here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle between forms
+        function showLoginForm() {
+            document.getElementById('loginForm').classList.remove('hidden-form');
+            document.getElementById('signupForm').classList.add('hidden-form');
+            document.getElementById('loginToggle').classList.add('active');
+            document.getElementById('signupToggle').classList.remove('active');
+        }
+
+        function showSignupForm() {
+            document.getElementById('signupForm').classList.remove('hidden-form');
+            document.getElementById('loginForm').classList.add('hidden-form');
+            document.getElementById('signupToggle').classList.add('active');
+            document.getElementById('loginToggle').classList.remove('active');
+        }
+
+        // Toggle password visibility
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = event.target.closest('.toggle-password').querySelector('.eye-icon');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Form validation
+        document.addEventListener('DOMContentLoaded', function() {
+            const signupPasswordField = document.getElementById('signupPassword');
+            const confirmPasswordField = document.getElementById('confirmPassword');
+            const signupForm = document.querySelector('#signupForm form');
+
+            if (signupForm) {
+                signupForm.addEventListener('submit', function(e) {
+                    if (signupPasswordField.value !== confirmPasswordField.value) {
+                        e.preventDefault();
+                        alert('Passwords do not match!');
+                        return false;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
