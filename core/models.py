@@ -210,3 +210,102 @@ class Withdrawal(models.Model):
     def __str__(self):
         return f"{self.user.email} - Rs. {self.amount} ({self.status})"
 
+
+class ReferralSettings(models.Model):
+    """Settings for Referral Commissions"""
+    direct_referral_amount = models.DecimalField(
+        max_digits=10, 
+        decimal_places=2, 
+        default=200.00,
+        verbose_name="Direct Referral Amount (₹)"
+    )
+    matching_income_percentage = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=6.00,
+        verbose_name="Matching Income Percentage (%)"
+    )
+    is_active = models.BooleanField(default=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = "Referral Settings"
+        verbose_name_plural = "Referral Settings"
+    
+    def save(self, *args, **kwargs):
+        # Ensure only one active settings instance
+        if self.is_active:
+            ReferralSettings.objects.filter(is_active=True).update(is_active=False)
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f"Direct: ₹{self.direct_referral_amount}, Matching: {self.matching_income_percentage}%"
+
+
+class HomePageSection(models.Model):
+    """Dynamic Home Page Sections"""
+    SECTION_TYPES = [
+        ('hero', 'Hero Section'),
+        ('features', 'Features Section'),
+        ('plans', 'Income Plans'),
+        ('products', 'Products Section'),
+        ('testimonials', 'Testimonials'),
+        ('faq', 'FAQ Section'),
+    ]
+    
+    section_type = models.CharField(max_length=50, choices=SECTION_TYPES, unique=True)
+    title = models.CharField(max_length=255)
+    subtitle = models.TextField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    display_order = models.IntegerField(default=0)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = "Home Page Section"
+        verbose_name_plural = "Home Page Sections"
+        ordering = ['display_order']
+    
+    def __str__(self):
+        return f"{self.get_section_type_display()} - {self.title}"
+
+
+class PlanItem(models.Model):
+    """Income Plan Items for Home Page"""
+    section = models.ForeignKey(HomePageSection, on_delete=models.CASCADE, related_name='plan_items', null=True, blank=True)
+    icon = models.CharField(max_length=50, default='👥')
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    amount = models.CharField(max_length=50, help_text="Can be percentage, amount, or symbol")
+    display_order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "Plan Item"
+        verbose_name_plural = "Plan Items"
+        ordering = ['display_order']
+    
+    def __str__(self):
+        return self.title
+
+
+class ProductItem(models.Model):
+    """Product Items for Home Page"""
+    section = models.ForeignKey(HomePageSection, on_delete=models.CASCADE, related_name='product_items', null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    # Prefer uploading an image; image_url kept for external images / backwards compatibility
+    image = models.ImageField(upload_to='product_images/', blank=True, null=True)
+    image_url = models.URLField(blank=True, null=True)
+    display_order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        verbose_name = "Home Page Product"
+        verbose_name_plural = "Home Page Products"
+        ordering = ['display_order']
+    
+    def __str__(self):
+        return self.name
+

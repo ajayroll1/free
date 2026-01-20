@@ -495,6 +495,13 @@
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6">
+                    <div class="stat-card balance">
+                        <div class="stat-card-title"><i class="fas fa-rupee-sign"></i> Referral Earnings</div>
+                        <div class="stat-card-value">₹{{ total_referral_earnings }}</div>
+                        <div class="stat-card-subtitle">Total commission earned</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
                     <div class="stat-card purchase">
                         <div class="stat-card-title"><i class="fas fa-shopping-bag"></i> Products Bought</div>
                         <div class="stat-card-value">{{ purchase_count }}</div>
@@ -572,31 +579,44 @@
                 {% endif %}
             </div>
 
-            <!-- Recent Purchases -->
+            <!-- All Purchases -->
             <div class="table-container">
                 <div class="section-heading">
-                    <i class="fas fa-shopping-cart"></i> Recent Purchases
+                    <i class="fas fa-shopping-cart"></i> My Purchases - Total: {{ purchase_count }} (₹{{ total_spent }})
                 </div>
                 {% if purchases %}
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Product</th>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                <th>Description</th>
                                 <th>Quantity</th>
-                                <th>Amount</th>
+                                <th>Unit Price</th>
+                                <th>Total Amount</th>
                                 <th>Purchase Date</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for purchase in purchases %}
                                 <tr>
+                                    <td>{{ forloop.counter }}</td>
                                     <td><strong>{{ purchase.product.name }}</strong></td>
+                                    <td>{{ purchase.product.description|truncatewords:10 }}</td>
                                     <td>{{ purchase.quantity }}</td>
+                                    <td>₹{{ purchase.product.price }}</td>
                                     <td><strong>₹{{ purchase.total_amount }}</strong></td>
-                                    <td>{{ purchase.purchase_date|date:"M d, Y" }}</td>
+                                    <td>{{ purchase.purchase_date|date:"M d, Y H:i" }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
+                        <tfoot>
+                            <tr style="background: #f8f9fa;">
+                                <td colspan="5" class="text-end"><strong>Total Spent:</strong></td>
+                                <td><strong style="color: #dc3545; font-size: 18px;">₹{{ total_spent }}</strong></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 {% else %}
                     <div class="empty-state">
@@ -609,30 +629,40 @@
             <!-- Referrals -->
             <div class="table-container">
                 <div class="section-heading">
-                    <i class="fas fa-network-wired"></i> My Referrals (Downline)
+                    <i class="fas fa-network-wired"></i> My Referrals (Downline) - Total: {{ referral_count }}
                 </div>
                 {% if referrals %}
                     <table class="table">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Mobile</th>
+                                <th>Referral ID</th>
                                 <th>Referral Date</th>
-                                <th>Commission</th>
+                                <th>Commission Earned</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for referral in referrals %}
                                 <tr>
+                                    <td>{{ forloop.counter }}</td>
                                     <td><strong>{{ referral.referred_user.get_full_name }}</strong></td>
                                     <td>{{ referral.referred_user.email }}</td>
                                     <td>{{ referral.referred_user.mobile }}</td>
+                                    <td><span class="badge bg-info">{{ referral.referred_user.referral_id }}</span></td>
                                     <td>{{ referral.referral_date|date:"M d, Y" }}</td>
                                     <td><strong style="color: #28a745;">₹{{ referral.commission_earned }}</strong></td>
                                 </tr>
                             {% endfor %}
                         </tbody>
+                        <tfoot>
+                            <tr style="background: #f8f9fa;">
+                                <td colspan="6" class="text-end"><strong>Total Referral Earnings:</strong></td>
+                                <td><strong style="color: #28a745; font-size: 18px;">₹{{ total_referral_earnings }}</strong></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 {% else %}
                     <div class="empty-state">

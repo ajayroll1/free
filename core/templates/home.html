@@ -1007,40 +1007,25 @@ body {
 <section class="plan-section" id="plan">
   <div class="container">
     <div class="plan-header">
-      <h2>Business Plans</h2>
-      <p>Multiple ways to earn with our proven system</p>
+      <h2>{% if sections.plans %}{{ sections.plans.title }}{% else %}Business Plans{% endif %}</h2>
+      <p>{% if sections.plans and sections.plans.subtitle %}{{ sections.plans.subtitle }}{% else %}Multiple ways to earn with our proven system{% endif %}</p>
     </div>
     
     <div class="row g-4">
-      <div class="col-lg-4 col-md-6">
-        <div class="plan-card">
-          <div class="plan-icon">👥</div>
-          <h4>Matching Income</h4>
-          <p>Left Leg + Right Leg = Pair</p>
-          <div class="amount">6%</div>
-          <p>Unlimited pairs per cycle</p>
+      {% if plan_items %}
+        {% for plan in plan_items %}
+        <div class="col-lg-4 col-md-6">
+          <div class="plan-card">
+            <div class="plan-icon">{{ plan.icon }}</div>
+            <h4>{{ plan.title }}</h4>
+            <p>{{ plan.description }}</p>
+            <div class="amount">{{ plan.amount }}</div>
+          </div>
         </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="plan-card">
-          <div class="plan-icon">💵</div>
-          <h4>Direct Income</h4>
-          <p>Earn from direct referrals</p>
-          <div class="amount">₹200</div>
-          <p>Per direct member</p>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="plan-card">
-          <div class="plan-icon">🏆</div>
-          <h4>Reward Program</h4>
-          <p>Bikes, Cars & Cash Prizes</p>
-          <div class="amount">∞</div>
-          <p>Unlimited rewards</p>
-        </div>
-      </div>
+        {% endfor %}
+      {% else %}
+        <div class="text-center text-muted py-4">No business plans added yet.</div>
+      {% endif %}
     </div>
   </div>
 </section>
@@ -1049,108 +1034,63 @@ body {
 <section class="products-section" id="products">
   <div class="container">
     <div class="products-header">
-      <h2>Our Premium Kits & Packages</h2>
-      <p>Quality products at affordable prices</p>
+      <h2>{% if sections.products %}{{ sections.products.title }}{% else %}Our Premium Kits & Packages{% endif %}</h2>
+      <p>{% if sections.products and sections.products.subtitle %}{{ sections.products.subtitle }}{% else %}Quality products at affordable prices{% endif %}</p>
     </div>
     
     <div class="marquee-container">
       <div class="marquee">
-        <div class="product-card">
-          <img src="https://images.pexels.com/photos/994517/pexels-photo-994517.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Suit Kit" class="product-image">
-          <div class="product-info">
-            <h5>Premium Suit Kit</h5>
-            <p>High quality suits collection</p>
-            <div class="price">₹1,999</div>
-            <button class="btn btn-secondary buy-now-btn" 
-                    data-product-name="Premium Suit Kit" 
-                    data-product-description="High quality suits collection"
-                    data-product-price="1999"
-                    data-product-image="https://images.pexels.com/photos/994517/pexels-photo-994517.jpeg?auto=compress&cs=tinysrgb&w=500">
-              Buy Now
-            </button>
-          </div>
-        </div>
-
-        <div class="product-card">
-          <img src="https://images.pexels.com/photos/291762/pexels-photo-291762.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Saree Kit" class="product-image">
-          <div class="product-info">
-            <h5>Elegant Saree Kit</h5>
-            <p>Traditional & modern collection</p>
-            <div class="price">₹1,999</div>
-            <button class="btn btn-secondary buy-now-btn" 
-                    data-product-name="Elegant Saree Kit" 
-                    data-product-description="Traditional & modern collection"
-                    data-product-price="1999"
-                    data-product-image="https://images.pexels.com/photos/291762/pexels-photo-291762.jpeg?auto=compress&cs=tinysrgb&w=500">
-              Buy Now
-            </button>
-          </div>
-        </div>
-
-        <div class="product-card">
-          <img src="https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Health Kit" class="product-image">
-          <div class="product-info">
-            <h5>Health & Wellness Kit</h5>
-            <p>Premium health supplements</p>
-            <div class="price">₹2,999</div>
-            <button class="btn btn-secondary buy-now-btn" 
-                    data-product-name="Health & Wellness Kit" 
-                    data-product-description="Premium health supplements"
-                    data-product-price="2999"
-                    data-product-image="https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=500">
-              Buy Now
-            </button>
-          </div>
-        </div>
-
-        <!-- Repeat for continuous loop -->
-        <div class="product-card">
-          <img src="https://images.pexels.com/photos/994517/pexels-photo-994517.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Suit Kit" class="product-image">
-          <div class="product-info">
-            <h5>Premium Suit Kit</h5>
-            <p>High quality suits collection</p>
-            <div class="price">₹1,999</div>
-            <button class="btn btn-secondary buy-now-btn" 
-                    data-product-name="Premium Suit Kit" 
-                    data-product-description="High quality suits collection"
-                    data-product-price="1999"
-                    data-product-image="https://images.pexels.com/photos/994517/pexels-photo-994517.jpeg?auto=compress&cs=tinysrgb&w=500">
-              Buy Now
-            </button>
-          </div>
-        </div>
-
-        <div class="product-card">
-          <img src="https://images.pexels.com/photos/291762/pexels-photo-291762.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Saree Kit" class="product-image">
-          <div class="product-info">
-            <h5>Elegant Saree Kit</h5>
-            <p>Traditional & modern collection</p>
-            <div class="price">₹1,999</div>
-            <button class="btn btn-secondary buy-now-btn" 
-                    data-product-name="Elegant Saree Kit" 
-                    data-product-description="Traditional & modern collection"
-                    data-product-price="1999"
-                    data-product-image="https://images.pexels.com/photos/291762/pexels-photo-291762.jpeg?auto=compress&cs=tinysrgb&w=500">
-              Buy Now
-            </button>
-          </div>
-        </div>
-
-        <div class="product-card">
-          <img src="https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=500" alt="Health Kit" class="product-image">
-          <div class="product-info">
-            <h5>Health & Wellness Kit</h5>
-            <p>Premium health supplements</p>
-            <div class="price">₹2,999</div>
-            <button class="btn btn-secondary buy-now-btn" 
-                    data-product-name="Health & Wellness Kit" 
-                    data-product-description="Premium health supplements"
-                    data-product-price="2999"
-                    data-product-image="https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=500">
-              Buy Now
-            </button>
-          </div>
-        </div>
+        {% if product_items %}
+          {# render twice for marquee loop #}
+          {% for item in product_items %}
+            <div class="product-card">
+              {% if item.image %}
+                <img src="{{ item.image.url }}" alt="{{ item.name }}" class="product-image">
+              {% elif item.image_url %}
+                <img src="{{ item.image_url }}" alt="{{ item.name }}" class="product-image">
+              {% else %}
+                <img src="https://via.placeholder.com/500x320?text=Product" alt="{{ item.name }}" class="product-image">
+              {% endif %}
+              <div class="product-info">
+                <h5>{{ item.name }}</h5>
+                <p>{{ item.description }}</p>
+                <div class="price">₹{{ item.price }}</div>
+                <button class="btn btn-secondary buy-now-btn"
+                        data-product-name="{{ item.name }}"
+                        data-product-description="{{ item.description }}"
+                        data-product-price="{{ item.price }}"
+                        data-product-image="{% if item.image %}{{ item.image.url }}{% else %}{{ item.image_url }}{% endif %}">
+                  Buy Now
+                </button>
+              </div>
+            </div>
+          {% endfor %}
+          {% for item in product_items %}
+            <div class="product-card">
+              {% if item.image %}
+                <img src="{{ item.image.url }}" alt="{{ item.name }}" class="product-image">
+              {% elif item.image_url %}
+                <img src="{{ item.image_url }}" alt="{{ item.name }}" class="product-image">
+              {% else %}
+                <img src="https://via.placeholder.com/500x320?text=Product" alt="{{ item.name }}" class="product-image">
+              {% endif %}
+              <div class="product-info">
+                <h5>{{ item.name }}</h5>
+                <p>{{ item.description }}</p>
+                <div class="price">₹{{ item.price }}</div>
+                <button class="btn btn-secondary buy-now-btn"
+                        data-product-name="{{ item.name }}"
+                        data-product-description="{{ item.description }}"
+                        data-product-price="{{ item.price }}"
+                        data-product-image="{% if item.image %}{{ item.image.url }}{% else %}{{ item.image_url }}{% endif %}">
+                  Buy Now
+                </button>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="text-center text-muted py-4">No products added yet.</div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -1724,11 +1664,8 @@ body {
       const data = await response.json();
 
       if (data.success) {
-        // Show success message
         alert('Purchase successful! Product purchased successfully.');
-        // Close modal
         productModal.hide();
-        // Reload page to update dashboard
         window.location.reload();
       } else {
         alert('Error: ' + data.message);
@@ -1737,7 +1674,6 @@ body {
       alert('An error occurred. Please try again.');
       console.error('Error:', error);
     } finally {
-      // Re-enable button
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalText;
     }
