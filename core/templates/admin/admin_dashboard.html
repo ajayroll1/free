@@ -194,18 +194,18 @@
                     <a class="nav-link" href="{% url 'admin_dashboard' %}#withdrawals">
                         <i class="fas fa-money-bill-wave"></i> Withdrawals
                     </a>
-                    <a class="nav-link" href="{% url 'admin_settings' %}">
+                    {% comment %} <a class="nav-link" href="{% url 'admin_settings' %}">
                         <i class="fas fa-cog"></i> Settings
-                    </a>
-                    <a class="nav-link" href="{% url 'admin_plans' %}">
+                    </a> {% endcomment %}
+                    {% comment %} <a class="nav-link" href="{% url 'admin_plans' %}">
                         <i class="fas fa-clipboard-list"></i> Plans
-                    </a>
+                    </a> {% endcomment %}
                     <a class="nav-link" href="{% url 'home' %}">
                         <i class="fas fa-home"></i> Home Page
                     </a>
-                    <a class="nav-link" href="{% url 'admin_products' %}">
+                    {% comment %} <a class="nav-link" href="{% url 'admin_products' %}">
                         <i class="fas fa-box"></i> Products
-                    </a>
+                    </a> {% endcomment %}
                 </nav>
             </div>
 
